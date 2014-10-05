@@ -1,6 +1,6 @@
 ## Latent Dirichlet allocation
 
-This is a C implementation of variational EM for latent Dirichlet allocation (LDA), a topic model for text or other discrete data. LDA allows you to analyze of corpus, and extract the topics that combined to form its documents. For example, click [here](https://github.com/altosaar/lda-c/blob/master/example/ap-topics.pdf) to see the topics estimated from a small corpus of Associated Press documents. LDA is fully described in [Blei et al. (2003)](http://www.cs.columbia.edu/~blei/papers/BleiNgJordan2003.pdf).
+This is a C implementation of variational EM for latent Dirichlet allocation (LDA), a topic model for text or other discrete data. LDA allows you to analyze of corpus, and extract the topics that combined to form its documents. For example, click [here](https://github.com/Blei-Lab/lda-c/blob/master/example/ap-topics.pdf) to see the topics estimated from a small corpus of Associated Press documents. LDA is fully described in [Blei et al. (2003)](http://www.cs.columbia.edu/~blei/papers/BleiNgJordan2003.pdf).
 
 This code contains:
 
@@ -9,13 +9,13 @@ This code contains:
 
 ## Readme
 
-View the [readme.txt](https://github.com/altosaar/lda-c/blob/master/readme.txt) and fork or clone the repository.
+View the [readme.txt](https://github.com/Blei-Lab/lda-c/blob/master/readme.txt) and fork or clone the repository.
 
 ## Sample data
 
-2246 documents from the Associated Press **[download](https://github.com/altosaar/lda-c/blob/master/example/ap.tgz)**.
+2246 documents from the Associated Press **[download](https://github.com/Blei-Lab/lda-c/blob/master/example/ap.tgz)**.
 
-Top 20 words from 100 topics estimated from the AP corpus **[pdf](https://github.com/altosaar/lda-c/blob/master/example/ap-topics.pdf)**.
+Top 20 words from 100 topics estimated from the AP corpus **[pdf](https://github.com/Blei-Lab/lda-c/blob/master/example/ap-topics.pdf)**.
 
 ## Bug fixes and updates
 

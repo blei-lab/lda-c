@@ -1,5 +1,5 @@
 #ifndef LDA_MODEL_H
-#define LDA_MODEL
+#define LDA_MODEL_H
 
 #include <stdlib.h>
 #include <stdio.h>

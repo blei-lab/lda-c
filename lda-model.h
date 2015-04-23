@@ -16,6 +16,7 @@ void save_lda_model(lda_model*, char*);
 lda_model* new_lda_model(int, int);
 lda_suffstats* new_lda_suffstats(lda_model* model);
 void corpus_initialize_ss(lda_suffstats* ss, lda_model* model, corpus* c);
+void manual_initialize_ss(char *seedfile, lda_suffstats* ss, lda_model* model, corpus* c);
 void random_initialize_ss(lda_suffstats* ss, lda_model* model);
 void zero_initialize_ss(lda_suffstats* ss, lda_model* model);
 void lda_mle(lda_model* model, lda_suffstats* ss, int estimate_alpha);

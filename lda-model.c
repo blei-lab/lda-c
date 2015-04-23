@@ -119,14 +119,31 @@ void random_initialize_ss(lda_suffstats* ss, lda_model* model)
 void corpus_initialize_ss(lda_suffstats* ss, lda_model* model, corpus* c)
 {
     int num_topics = model->num_topics;
-    int i, k, d, n;
+    int i, j, k, d, n;
     document* doc;
-
+    int seen[num_topics][NUM_INIT];
+    int already_selected;
+        
     for (k = 0; k < num_topics; k++)
     {
         for (i = 0; i < NUM_INIT; i++)
         {
-            d = floor(myrand() * c->num_docs);
+            do
+            {
+              d = floor(myrand() * c->num_docs);
+
+              already_selected = 0;
+              for (j = 0;j < k;j++)
+              {
+                if (seen[j][i] == d)
+                {
+                  already_selected = 1;
+                  printf("skipping duplicate seed document %d\n", d);
+                }
+              }
+            } while (already_selected);
+            seen[k][i] = d;
+            
             printf("initialized with document %d\n", d);
             doc = &(c->docs[d]);
             for (n = 0; n < doc->length; n++)

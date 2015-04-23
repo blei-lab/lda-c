@@ -81,15 +81,16 @@ B. TOPIC ESTIMATION
 
 Estimate the model by executing:
 
-     lda est [alpha] [k] [settings] [data] [random/seeded/*] [directory]
+     lda est [alpha] [k] [settings] [data] [random/seeded/manual=filename/*] [directory]
 
 The term [random/seeded/*] > describes how the topics will be
 initialized.  "Random" initializes each topic randomly; "seeded"
 initializes each topic to a distribution smoothed from a randomly
-chosen document; or, you can specify a model name to load a
-pre-existing model as the initial model (this is useful to continue EM
-from where it left off).  To change the number of initial documents
-used, edit lda-estimate.c.
+chosen document; "manual=filename" will load the document numbers to
+use as seeds from the file specified (one per line); or, you can
+specify a model name to load a pre-existing model as the initial model
+(this is useful to continue EM from where it left off).  To change the
+number of initial documents used, edit lda-estimate.c.
 
 The model (i.e., \alpha and \beta_{1:K}) and variational posterior
 Dirichlet parameters will be saved in the specified directory every

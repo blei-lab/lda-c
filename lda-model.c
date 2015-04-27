@@ -119,14 +119,31 @@ void random_initialize_ss(lda_suffstats* ss, lda_model* model)
 void corpus_initialize_ss(lda_suffstats* ss, lda_model* model, corpus* c)
 {
     int num_topics = model->num_topics;
-    int i, k, d, n;
+    int i, j, k, d, n;
     document* doc;
-
+    int seen[num_topics][NUM_INIT];
+    int already_selected;
+        
     for (k = 0; k < num_topics; k++)
     {
         for (i = 0; i < NUM_INIT; i++)
         {
-            d = floor(myrand() * c->num_docs);
+            do
+            {
+              d = floor(myrand() * c->num_docs);
+
+              already_selected = 0;
+              for (j = 0;j < k;j++)
+              {
+                if (seen[j][i] == d)
+                {
+                  already_selected = 1;
+                  printf("skipping duplicate seed document %d\n", d);
+                }
+              }
+            } while (already_selected);
+            seen[k][i] = d;
+            
             printf("initialized with document %d\n", d);
             doc = &(c->docs[d]);
             for (n = 0; n < doc->length; n++)
@@ -141,6 +158,50 @@ void corpus_initialize_ss(lda_suffstats* ss, lda_model* model, corpus* c)
         }
     }
 }
+
+void manual_initialize_ss(char *seedfile, lda_suffstats* ss, lda_model* model, corpus* c)
+{
+    int num_topics = model->num_topics;
+    int i, k, d, n, err;
+    document* doc;
+
+    FILE *seeds = fopen(seedfile,"r");
+    if (seeds == NULL) {
+      printf("Couldn't find manual seeds in %s.\n", seedfile);
+      exit(1);
+    }
+    printf("Loading seeds from %s\n", seedfile);
+    
+    for (k = 0; k < num_topics; k++)
+    {
+        for (i = 0; i < NUM_INIT; i++)
+        {
+            err = fscanf(seeds, "%d\n", &d);
+            if (err == EOF)
+            {
+              printf("Ran out of seeds (%d/%d)\n", k, num_topics);
+              exit(2);
+            } else if (err != 1)
+            {
+              printf("Couldn't read a seed from ldaseeds.txt. It should have one number per line.\n");
+              exit(3);
+            }
+
+            printf("initialized with document %d\n", d);
+            doc = &(c->docs[d]);
+            for (n = 0; n < doc->length; n++)
+            {
+                ss->class_word[k][doc->words[n]] += doc->counts[n];
+            }
+        }
+        for (n = 0; n < model->num_terms; n++)
+        {
+            ss->class_word[k][n] += 1.0;
+            ss->class_total[k] = ss->class_total[k] + ss->class_word[k][n];
+        }
+    }
+}
+
 
 /*
  * allocate new lda model

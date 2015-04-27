@@ -147,6 +147,14 @@ void run_em(char* start, char* directory, corpus* corpus)
         lda_mle(model, ss, 0);
         model->alpha = INITIAL_ALPHA;
     }
+    else if (strncmp(start, "manual=",7)==0)
+    {
+        model = new_lda_model(corpus->num_terms, NTOPICS);
+        ss = new_lda_suffstats(model);
+        manual_initialize_ss(start + 7, ss, model, corpus);
+        lda_mle(model, ss, 0);
+        model->alpha = INITIAL_ALPHA;
+    }
     else
     {
         model = load_lda_model(start);
@@ -334,7 +342,7 @@ int main(int argc, char* argv[])
     }
     else
     {
-        printf("usage : lda est [initial alpha] [k] [settings] [data] [random/seeded/*] [directory]\n");
+        printf("usage : lda est [initial alpha] [k] [settings] [data] [random/seeded/manual=filename/*] [directory]\n");
         printf("        lda inf [settings] [model] [data] [name]\n");
     }
     return(0);
